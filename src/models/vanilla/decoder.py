@@ -66,6 +66,7 @@ class DecoderLayer(nn.Module):
         self.LayerNorm_2 = LayerNorm(hidden_dim=embed_dim)
         self.LayerNorm_3 = LayerNorm(hidden_dim=embed_dim)
         self.FF = PositionwiseFeedForward(embed_dim, ff_hidden)
+        self.Relu = nn.ReLU()
         self.Dropout = nn.Dropout(p=dropout)
 
     def forward(self, x, enc_out, input_mask, enc_mask):
@@ -76,5 +77,6 @@ class DecoderLayer(nn.Module):
         x = self.LayerNorm_2(x + cross_attention)
         x = self.Dropout(x)
         x = self.LayerNorm_3(x + self.FF(x))
+        x = self.Relu(x)
         x = self.Dropout(x)
         return x

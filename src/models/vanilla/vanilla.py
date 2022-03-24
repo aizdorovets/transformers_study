@@ -59,9 +59,6 @@ class VanillaTransformer(nn.Module):
             dropout,
             n_decoder_layers,
         )
-        # self.Decoders = nn.ModuleList([
-        #     DecoderLayer() for _ in range(n_decoder_layers)
-        # ])
         self.Exit = nn.Linear(embed_dim, vocab_size)
 
     def forward(

@@ -56,6 +56,7 @@ class EncoderLayer(nn.Module):
         self.LayerNorm_1 = LayerNorm(hidden_dim=embed_dim)
         self.LayerNorm_2 = LayerNorm(hidden_dim=embed_dim)
         self.FF = PositionwiseFeedForward(embed_dim, ff_hidden)
+        self.Relu = nn.ReLU()
         self.Dropout = nn.Dropout(p=dropout)
 
     def forward(self, x, mask):
@@ -63,5 +64,6 @@ class EncoderLayer(nn.Module):
         x = self.LayerNorm_1(x + attention)
         x = self.Dropout(x)
         x = self.LayerNorm_2(x + self.FF(x))
+        x = self.Relu(x)
         x = self.Dropout(x)
         return x
